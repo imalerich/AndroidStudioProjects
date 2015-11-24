@@ -1,7 +1,6 @@
 package ian.malerich.com.calculator;
 
 import android.os.Bundle;
-import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -46,7 +45,7 @@ public class CalcActivity extends AppCompatActivity {
 
         Button digit = (Button)view;
         currentValue += digit.getText();
-        setValueToTextView();
+        setEquationToTextView();
     }
 
     /**
@@ -76,29 +75,21 @@ public class CalcActivity extends AppCompatActivity {
         currentExpression.add(currentValue);
         currentValue = null;
         setEquationToTextView();
-        setValueToTextView();
     }
 
     /** Displays the content of currentExpression in the expression textView */
     public void setEquationToTextView() {
-        TextView equationView = (TextView)findViewById(R.id.expression_view);
-        if (currentExpression.size() == 0) {
-            equationView.setText("");
-            return;
-        }
+        TextView displayView = (TextView)findViewById(R.id.display_view);
 
         String displayText = new String();
         for (String str : currentExpression) {
             displayText += (str + " ");
         }
 
-        equationView.setText(displayText);
-    }
+        displayText += (currentValue == null ? "" : (currentValue + " "));
+        displayText = new String(displayText.toCharArray(), 0, displayText.length() - 1);
 
-    /** Displays the currentValue in the result view */
-    public void setValueToTextView() {
-        TextView resultView = (TextView)findViewById(R.id.result_view);
-        resultView.setText(currentValue == null ? "0" : currentValue);
+        displayView.setText(displayText);
     }
 
     /** Applies any operators available in the currentExpression */
@@ -114,13 +105,20 @@ public class CalcActivity extends AppCompatActivity {
                     currentExpression.removeAll(currentExpression);
                     currentValue = null;
                     setEquationToTextView();
-                    setValueToTextView();;
                     return;
                 }
 
-                double first = Double.parseDouble(values.remove(values.size()-1));
                 double second = Double.parseDouble(values.remove(values.size()-1));
-                values.add(Double.toString(first + second));
+                double first = Double.parseDouble(values.remove(values.size()-1));
+                double result = performOperator(first, second, str);
+
+                // Only print in decimal format for decimal values
+                if (Math.abs(result - (int)result) > 0.0000000001) {
+                    values.add(Double.toString(result));
+                } else {
+                    // Otherwise ignore the extra '.0' characters
+                    values.add(Integer.toString((int)result));
+                }
             }
         }
 
@@ -129,10 +127,25 @@ public class CalcActivity extends AppCompatActivity {
 
     /** Determines whether or not the input String is to be considered a valid oeprator" */
     public boolean isOperator(String str) {
-        if (str.equals("+") || str.equals("-")) {
+        if (str.equals("+") || str.equals("-") || str.equals("÷") || str.equals("×")){
             return true;
         }
 
         return false;
+    }
+
+    /** Returns the result of operator 'op' on Operandes 'A' and 'B' */
+    public double performOperator(double A, double B, String op) {
+        if (op.equals("+")) {
+            return A + B;
+        } else if (op.equals("-")) {
+            return A - B;
+        } else if (op.equals("×")) {
+            return A * B;
+        } else if (op.equals("÷")) {
+            return A / B;
+        }
+
+        return 0.0;
     }
 }

@@ -18,18 +18,7 @@
         android:layout_height="200dp">
 
         <TextView
-            android:id="@+id/expression_view"
-            android:padding="18dp"
-            android:textSize="18dp"
-            android:textColor="#666"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:autoText="false"
-            android:text=""
-            android:gravity="center_vertical" />
-
-        <TextView
-            android:id="@+id/result_view"
+            android:id="@+id/display_view"
             android:padding="24dp"
             android:textSize="32dp"
             android:textColor="#000"
