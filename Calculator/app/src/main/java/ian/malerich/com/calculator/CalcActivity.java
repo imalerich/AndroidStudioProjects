@@ -18,6 +18,8 @@ public class CalcActivity extends AppCompatActivity {
     /** The current value we are adding to. */
     private String currentValue = null;
 
+    private static final double epsilon = 0.00000001;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,15 +39,37 @@ public class CalcActivity extends AppCompatActivity {
      * or hits the sigma key to input the value.
      *
      * @param view
+     *  The button the user tapped to enter a digit.
      */
     public void didEnterDigit(View view) {
+        Button digit = (Button)view;
+        if (digit.getText().equals("0") && currentValue == null) {
+            // ignore 0s before entering characters
+            return;
+        }
+
+        if (digit.getText().equals(".")) {
+            // Entering a digit < 1, include a preceding 0
+            if (currentValue == null) {
+                currentValue = "0";
+            }
+
+            // the user cannot add another decimal value
+            if (!canAddDecimal()) {
+                return;
+            }
+        }
+
         if (currentValue == null) {
             currentValue = new String();
         }
 
-        Button digit = (Button)view;
         currentValue += digit.getText();
         setEquationToTextView();
+    }
+
+    private boolean canAddDecimal() {
+        return currentValue.indexOf(".") == -1;
     }
 
     /**
@@ -87,7 +111,10 @@ public class CalcActivity extends AppCompatActivity {
         }
 
         displayText += (currentValue == null ? "" : (currentValue + " "));
-        displayText = new String(displayText.toCharArray(), 0, displayText.length() - 1);
+
+        if (displayText.length() > 1) {
+            displayText = new String(displayText.toCharArray(), 0, displayText.length() - 1);
+        }
 
         displayView.setText(displayText);
     }
@@ -113,7 +140,7 @@ public class CalcActivity extends AppCompatActivity {
                 double result = performOperator(first, second, str);
 
                 // Only print in decimal format for decimal values
-                if (Math.abs(result - (int)result) > 0.0000000001) {
+                if (Math.abs(result - (int)result) > epsilon) {
                     values.add(Double.toString(result));
                 } else {
                     // Otherwise ignore the extra '.0' characters
