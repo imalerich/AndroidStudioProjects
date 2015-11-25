@@ -114,7 +114,12 @@ public class CalcActivity extends AppCompatActivity {
             return;
         }
 
-        currentValue = new String(currentValue.toCharArray(), 0, currentValue.length() - 1);
+        if (currentValue.length() == 1) {
+            currentValue = null;
+        } else {
+            currentValue = new String(currentValue.toCharArray(), 0, currentValue.length() - 1);
+        }
+
         setEquationToTextView();
     }
 
