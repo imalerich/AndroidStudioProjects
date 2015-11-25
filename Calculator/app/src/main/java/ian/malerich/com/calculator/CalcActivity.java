@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -179,10 +180,9 @@ public class CalcActivity extends AppCompatActivity {
             } else {
                 // an error occurred
                 if (values.size() < 2) {
-                    currentExpression.removeAll(currentExpression);
-                    currentValue = null;
-                    setEquationToTextView();
-                    return;
+                    Toast.makeText(getApplicationContext(), "Not enough operands!",
+                            Toast.LENGTH_SHORT).show();
+                    continue;
                 }
 
                 double second = Double.parseDouble(values.remove(values.size()-1));
