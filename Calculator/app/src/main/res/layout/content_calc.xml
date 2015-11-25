@@ -13,7 +13,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:background="#FFF"
-        android:elevation="12dp"
+        android:elevation="9dp"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp">
@@ -32,7 +32,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:elevation="11dp"
+        android:elevation="8dp"
         android:background="#FFF"
         android:layout_weight="1"
         android:layout_width="match_parent"
@@ -55,7 +55,7 @@
             android:layout_height="match_parent"
             android:background="#00FFFFFF"
             android:textColor="#607d8b"
-            android:textSize="16dp"
+            android:textSize="22dp"
             android:fontFamily="sans-serif-light"
             android:onClick="selectOperator"
             android:text="%" />
