@@ -14,7 +14,7 @@
         android:orientation="vertical"
         android:background="#FFF"
         android:elevation="12dp"
-        android:layout_weight="3"
+        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp">
 
@@ -32,13 +32,65 @@
     </LinearLayout>
 
     <LinearLayout
+        android:elevation="11dp"
+        android:background="#FFF"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="#00FFFFFF"
+            android:textColor="#607d8b"
+            android:textSize="24dp"
+            android:fontFamily="sans-serif-light"
+            android:onClick="swapSign"
+            android:text="±" />
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="#00FFFFFF"
+            android:textColor="#607d8b"
+            android:textSize="16dp"
+            android:fontFamily="sans-serif-light"
+            android:onClick="selectOperator"
+            android:text="%" />
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="#00FFFFFF"
+            android:textColor="#607d8b"
+            android:textSize="16dp"
+            android:fontFamily="sans-serif-light"
+            android:onClick="deleteCharFromValue"
+            android:text="Del" />
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="#00FFFFFF"
+            android:textColor="#607d8b"
+            android:textSize="16dp"
+            android:fontFamily="sans-serif-light"
+            android:onClick="clear"
+            android:text="Clr" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:orientation="horizontal"
-        android:layout_weight="7"
+        android:layout_weight="4"
         android:layout_width="match_parent"
         android:layout_height="0dp">
 
         <LinearLayout
-            android:elevation="10dp"
             android:orientation="vertical"
             android:layout_weight="3"
             android:layout_width="0dp"
@@ -206,7 +258,7 @@
                     android:background="#00FFFFFF"
                     android:textColor="#CFD8DC"
                     android:textSize="32dp"
-                    android:text="Σ"
+                    android:text="Σ+"
                     android:fontFamily="sans-serif-light"
                     android:onClick="addToExpression"
                     android:id="@+id/sigma" />

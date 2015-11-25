@@ -68,6 +68,55 @@ public class CalcActivity extends AppCompatActivity {
         setEquationToTextView();
     }
 
+    /**
+     * Swaps the sign of 'currentValue' from positive to negative
+     * and back again.
+     * @param view
+     *  The button the user tapped to swap the sign.
+     */
+    public void swapSign(View view) {
+        if (currentValue == null) {
+            currentValue = "-";
+            return;
+        }
+
+        if (currentValue.charAt(0) == '-') {
+            currentValue = new String(currentValue.toCharArray(), 1, currentValue.length() - 1);
+        } else {
+            currentValue = "-" + currentValue;
+        }
+
+        setEquationToTextView();
+    }
+
+    /**
+     * Clears all contents of the calculator.
+     * @param view
+     *  The button the user tapped to clear the contents.
+     */
+    public void clear(View view) {
+        currentExpression = new ArrayList<>();
+        currentValue = null;
+
+        setEquationToTextView();
+    }
+
+    /**
+     * Removes the last character from currentValue, if available.
+     * If currentValue is null or has a length of 0, this method does nothing.
+     *
+     * @param view
+     *  The button the user tapped to delete a character.
+     */
+    public void deleteCharFromValue(View view) {
+        if (currentValue == null || currentValue.length() == 0) {
+            return;
+        }
+
+        currentValue = new String(currentValue.toCharArray(), 0, currentValue.length() - 1);
+        setEquationToTextView();
+    }
+
     private boolean canAddDecimal() {
         return currentValue.indexOf(".") == -1;
     }
@@ -154,7 +203,8 @@ public class CalcActivity extends AppCompatActivity {
 
     /** Determines whether or not the input String is to be considered a valid oeprator" */
     public boolean isOperator(String str) {
-        if (str.equals("+") || str.equals("-") || str.equals("÷") || str.equals("×")){
+        if (str.equals("+") || str.equals("-") || str.equals("÷")
+                || str.equals("×") || str.equals("%")){
             return true;
         }
 
@@ -171,6 +221,8 @@ public class CalcActivity extends AppCompatActivity {
             return A * B;
         } else if (op.equals("÷")) {
             return A / B;
+        } else if (op.equals("%")) {
+            return (int)A % (int)B;
         }
 
         return 0.0;
