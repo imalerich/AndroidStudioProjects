@@ -153,19 +153,20 @@ public class CalcActivity extends AppCompatActivity {
     /** Displays the content of currentExpression in the expression textView */
     public void setEquationToTextView() {
         TextView displayView = (TextView)findViewById(R.id.display_view);
+        TextView currentView = (TextView)findViewById(R.id.current_view);
 
         String displayText = new String();
         for (String str : currentExpression) {
             displayText += (str + " ");
         }
 
-        displayText += (currentValue == null ? "" : (currentValue + " "));
-
         if (displayText.length() > 1) {
             displayText = new String(displayText.toCharArray(), 0, displayText.length() - 1);
         }
 
         displayView.setText(displayText);
+
+        currentView.setText(currentValue == null ? " " : " " + currentValue);
     }
 
     /** Applies any operators available in the currentExpression */
