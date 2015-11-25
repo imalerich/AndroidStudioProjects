@@ -27,7 +27,8 @@
             android:layout_height="match_parent"
             android:layout_width="wrap_content"
             android:text=""
-            android:gravity="center_vertical|right" />
+            android:gravity="center_vertical|right"
+            android:maxLines="1" />
 
         <TextView
             android:id="@+id/current_view"
@@ -37,7 +38,8 @@
             android:layout_height="match_parent"
             android:layout_width="wrap_content"
             android:text=" 0"
-            android:gravity="center_vertical|right" />
+            android:gravity="center_vertical|right"
+            android:maxLines="1" />
 
     </LinearLayout>
 

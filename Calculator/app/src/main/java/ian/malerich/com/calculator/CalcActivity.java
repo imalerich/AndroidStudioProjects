@@ -20,6 +20,7 @@ public class CalcActivity extends AppCompatActivity {
     private String currentValue = null;
 
     private static final double epsilon = 0.00000001;
+    private static final int characterLimit = 30;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,12 @@ public class CalcActivity extends AppCompatActivity {
         Button digit = (Button)view;
         if (digit.getText().equals("0") && currentValue == null) {
             // ignore 0s before entering characters
+            return;
+        }
+
+        if (!canAddCharacter()) {
+            Toast.makeText(getApplicationContext(), "Character limit reached!",
+                    Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -173,6 +180,16 @@ public class CalcActivity extends AppCompatActivity {
         displayView.setText(displayText);
 
         currentView.setText(currentValue == null ? " " : " " + currentValue);
+    }
+
+    public boolean canAddCharacter() {
+        String displayText = new String();
+        for (String str : currentExpression) {
+            displayText += (str + " ");
+        }
+
+        displayText += (currentValue == null ? " " : " " + currentValue);
+        return (displayText.length() < characterLimit);
     }
 
     /** Applies any operators available in the currentExpression */
