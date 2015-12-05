@@ -9,10 +9,11 @@
     tools:context="com.ian.malerich.photostream.PhotostreamActivity"
     tools:showIn="@layout/activity_photostream">
 
-    <ImageView
+    <ListView
+        android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:onClick="userDidTapImage"
-        android:id="@+id/imageView" />
+        android:layout_height="match_parent">
+
+    </ListView>
 
 </LinearLayout>

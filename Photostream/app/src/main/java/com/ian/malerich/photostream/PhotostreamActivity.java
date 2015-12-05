@@ -1,5 +1,9 @@
 package com.ian.malerich.photostream;
 
+import android.app.ListActivity;
+import android.content.CursorLoader;
+import android.content.Loader;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -23,18 +28,16 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class PhotostreamActivity extends AppCompatActivity {
+public class PhotostreamActivity extends ListActivity {
     private RequestQueue queue;
-    private ArrayList<String> images = new ArrayList<>();
-    private int currentIndex = 0;
+    private String[] images = new String[];
+    private SimpleCursorAdapter cursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         queue = Volley.newRequestQueue(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photostream);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         // create a Volley request for the text view
         StringRequest strreq = new StringRequest(Request.Method.GET, "http://photostream.iastate.edu/api/photo?key=c88ba8aca62dd5ccb60d", new Response.Listener<String>() {
@@ -42,13 +45,15 @@ public class PhotostreamActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONArray arr = new JSONArray(response);
+                    ArrayList<String> tmp = new ArrayList<>();
 
                     for (int i = 0; i < arr.length(); i++) {
                         JSONObject obj = arr.getJSONObject(i);
-                        images.add(obj.getString("image_medium"));
+                        tmp.add(obj.getString("image_medium"));
                     }
 
-                    setImageViewWithURL(images.get(currentIndex));
+                    images = (String[]) tmp.toArray();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -61,11 +66,6 @@ public class PhotostreamActivity extends AppCompatActivity {
         });
 
         queue.add(strreq);
-    }
-
-    public void userDidTapImage(View view) {
-        currentIndex = (currentIndex + 1) % images.size();
-        setImageViewWithURL(images.get(currentIndex));
     }
 
     private void setImageViewWithURL(String url) {
