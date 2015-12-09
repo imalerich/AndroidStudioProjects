@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -18,11 +19,11 @@ import java.util.ArrayList;
 /**
  * Created by wdmalerich on 12/8/15.
  */
-public class UrlImageAdapter extends ArrayAdapter<String> {
+public class UrlImageAdapter extends ArrayAdapter<PhotostreamItem> {
     private RequestQueue queue;
-    private ArrayList<String> strings;
+    private ArrayList<PhotostreamItem> strings;
 
-    public UrlImageAdapter(Context context, int textViewResourceId, ArrayList<String> Items, RequestQueue Queue) {
+    public UrlImageAdapter(Context context, int textViewResourceId, ArrayList<PhotostreamItem> Items, RequestQueue Queue) {
         super(context, textViewResourceId, Items);
         strings = Items;
         queue = Queue;
@@ -36,8 +37,13 @@ public class UrlImageAdapter extends ArrayAdapter<String> {
             v = li.inflate(R.layout.image_cell, null);
         }
 
+        PhotostreamItem current = strings.get(position);
+
         final ImageView imageView = (ImageView) v.findViewById(R.id.image_view);
-        setImageViewWithURL(strings.get(position), imageView);
+        setImageViewWithURL(current.imgUrl, imageView);
+
+        final TextView titleView = (TextView) v.findViewById(R.id.title_view);
+        titleView.setText(current.title);
 
         return v;
     }

@@ -1,28 +1,16 @@
 package com.ian.malerich.photostream;
 
 import android.app.Activity;
-import android.app.ListActivity;
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -33,7 +21,7 @@ import java.util.ArrayList;
 
 public class PhotostreamActivity extends Activity {
     private RequestQueue queue;
-    private ArrayList<String> images = new ArrayList<>();
+    private ArrayList<PhotostreamItem> images = new ArrayList<>();
     private SimpleCursorAdapter cursor;
 
     @Override
@@ -51,7 +39,7 @@ public class PhotostreamActivity extends Activity {
 
                     for (int i = 0; i < arr.length(); i++) {
                         JSONObject obj = arr.getJSONObject(i);
-                        images.add(obj.getString("image_medium"));
+                        images.add(new PhotostreamItem(obj));
                     }
 
                      displayImages();
