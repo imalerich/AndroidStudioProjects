@@ -1,5 +1,6 @@
 package com.ian.malerich.photostream;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.CursorLoader;
 import android.content.Loader;
@@ -11,7 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
@@ -28,9 +31,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class PhotostreamActivity extends ListActivity {
+public class PhotostreamActivity extends Activity {
     private RequestQueue queue;
-    private String[] images = new String[];
+    private ArrayList<String> images = new ArrayList<>();
     private SimpleCursorAdapter cursor;
 
     @Override
@@ -45,14 +48,13 @@ public class PhotostreamActivity extends ListActivity {
             public void onResponse(String response) {
                 try {
                     JSONArray arr = new JSONArray(response);
-                    ArrayList<String> tmp = new ArrayList<>();
 
                     for (int i = 0; i < arr.length(); i++) {
                         JSONObject obj = arr.getJSONObject(i);
-                        tmp.add(obj.getString("image_medium"));
+                        images.add(obj.getString("image_medium"));
                     }
 
-                    images = (String[]) tmp.toArray();
+                     displayImages();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -68,24 +70,10 @@ public class PhotostreamActivity extends ListActivity {
         queue.add(strreq);
     }
 
-    private void setImageViewWithURL(String url) {
-        // load the image for the image view
-        final ImageView imageView = (ImageView) findViewById(R.id.imageView);
-        ImageRequest imgreq = new ImageRequest(url,
-                new Response.Listener<Bitmap>() {
-                    @Override
-                    public void onResponse(Bitmap bitmap) {
-                        imageView.setImageBitmap(bitmap);
-                    }
-                }, 0, 0, null,
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //
-                    }
-                });
-
-        queue.add(imgreq);
+    public void displayImages() {
+        UrlImageAdapter adapter = new UrlImageAdapter(this, R.layout.image_cell, images, queue);
+        ListView listView = (ListView) findViewById(R.id.list_view);
+        listView.setAdapter(adapter);
     }
 
     @Override
