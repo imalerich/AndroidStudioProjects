@@ -26,7 +26,7 @@ public class PhotostreamActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        queue = Volley.newRequestQueue(this);
+        queue = Volley.newRequestQueue(this, 1024 * 1024 * 256);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photostream);
 

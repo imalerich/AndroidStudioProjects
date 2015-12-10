@@ -10,14 +10,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <TextView
-        android:id="@+id/title_view"
-        android:text="Sample Text"
-        android:textSize="48sp"
-        android:textColor="#fff"
-        android:layout_alignTop="@+id/image_view"
-        android:padding="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/title_view"
+            android:text="Sample Text"
+            android:textAlignment="center"
+            android:shadowColor="#000"
+            android:shadowDy="5.0"
+            android:shadowRadius="20.0"
+            android:textSize="48sp"
+            android:textColor="#fff"
+            android:padding="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/author_view"
+            android:text="Sample Author"
+            android:textAlignment="center"
+            android:shadowColor="#000"
+            android:shadowDy="5.0"
+            android:shadowRadius="20.0"
+            android:textSize="32sp"
+            android:textColor="#fff"
+            android:padding="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </RelativeLayout>
+

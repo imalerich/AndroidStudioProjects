@@ -45,6 +45,9 @@ public class UrlImageAdapter extends ArrayAdapter<PhotostreamItem> {
         final TextView titleView = (TextView) v.findViewById(R.id.title_view);
         titleView.setText(current.title);
 
+        final TextView authorView = (TextView) v.findViewById(R.id.author_view);
+        authorView.setText(current.author);
+
         return v;
     }
 
